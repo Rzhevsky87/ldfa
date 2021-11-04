@@ -31,10 +31,10 @@ services:
     volumes:
       - ./percona:/var/lib/percona
     environment:
-      MYSQL_DATABASE: ldfa_db
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: qwe123
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       SERVICE_TAGS: dev
       SERVICE_NAME: db
     networks:
@@ -82,20 +82,6 @@ services:
       - ./../:/var/www/html
     working_dir: /var/www/html
     entrypoint: ['npm']
-
-  artisan:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    container_name: ldfa_artisan
-    volumes:
-      - ./../:/var/www/html
-    depends_on:
-      - db
-    working_dir: /var/www/html
-    entrypoint: ['php', '/var/www/html/artisan']
-    networks:
-      - oktober
 
   cron:
     build:
